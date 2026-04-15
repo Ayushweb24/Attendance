@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
@@ -8,6 +8,16 @@ import AttendancePage from './pages/AttendancePage';
 import ReportsPage from './pages/ReportsPage';
 import LeavePage from './pages/LeavePage';
 import ProfilePage from './pages/ProfilePage';
+import { getDefaultRoute, normalizeRole } from './config/rbac';
+import Loader from './components/Loader';
+
+function RoleRedirect() {
+  const { user, loading } = useAuth();
+  if (loading) return <Loader fullScreen />;
+  if (!user) return <Navigate to="/login" replace />;
+  const role = normalizeRole(user?.role);
+  return <Navigate to={getDefaultRoute(role)} replace />;
+}
 
 export default function App() {
   return (
@@ -23,7 +33,7 @@ export default function App() {
             <Route path="/leave" element={<LeavePage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<RoleRedirect />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

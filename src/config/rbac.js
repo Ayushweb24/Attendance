@@ -8,6 +8,7 @@ export const NAV_ITEMS = [
 ];
 
 const DEFAULT_ROLE = 'student';
+const VALID_ROLES = ['admin', 'teacher', DEFAULT_ROLE];
 
 const ROLE_DEFAULT_ROUTE = {
   admin: '/dashboard',
@@ -15,7 +16,7 @@ const ROLE_DEFAULT_ROUTE = {
   [DEFAULT_ROLE]: '/reports',
 };
 
-export const normalizeRole = (role) => (ROLE_DEFAULT_ROUTE[role] ? role : DEFAULT_ROLE);
+export const normalizeRole = (role) => (VALID_ROLES.includes(role) ? role : DEFAULT_ROLE);
 
 export const getAllowedPaths = (role) =>
   NAV_ITEMS.filter((item) => item.roles.includes(normalizeRole(role))).map((item) => item.to);

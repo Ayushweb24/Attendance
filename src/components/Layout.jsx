@@ -23,7 +23,9 @@ export default function Layout() {
 
   const role = normalizeRole(user?.role);
   const allowedPaths = getAllowedPaths(role);
-  const isAllowed = allowedPaths.includes(location.pathname);
+  const isAllowed = allowedPaths.some(
+    (path) => location.pathname === path || location.pathname.startsWith(`${path}/`)
+  );
   if (!isAllowed) {
     return <Navigate to={getDefaultRoute(role)} replace />;
   }

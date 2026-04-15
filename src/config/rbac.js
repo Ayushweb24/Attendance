@@ -1,18 +1,21 @@
+const ROLE_ADMIN = 'admin';
+const ROLE_TEACHER = 'teacher';
+const ROLE_STUDENT = 'student';
+const DEFAULT_ROLE = ROLE_STUDENT;
+const VALID_ROLES = [ROLE_ADMIN, ROLE_TEACHER, ROLE_STUDENT];
+
 export const NAV_ITEMS = [
-  { to: '/dashboard', label: 'Dashboard', icon: '📊', roles: ['admin', 'teacher'] },
-  { to: '/students', label: 'Students', icon: '👥', roles: ['admin', 'teacher'] },
-  { to: '/attendance', label: 'Attendance', icon: '✅', roles: ['admin', 'teacher'] },
-  { to: '/reports', label: 'Reports', icon: '📈', roles: ['admin', 'teacher', 'student'] },
-  { to: '/leave', label: 'Leave', icon: '📋', roles: ['admin', 'teacher', 'student'] },
-  { to: '/profile', label: 'Profile', icon: '👤', roles: ['admin', 'teacher', 'student'] },
+  { to: '/dashboard', label: 'Dashboard', icon: '📊', roles: [ROLE_ADMIN, ROLE_TEACHER] },
+  { to: '/students', label: 'Students', icon: '👥', roles: [ROLE_ADMIN, ROLE_TEACHER] },
+  { to: '/attendance', label: 'Attendance', icon: '✅', roles: [ROLE_ADMIN, ROLE_TEACHER] },
+  { to: '/reports', label: 'Reports', icon: '📈', roles: [ROLE_ADMIN, ROLE_TEACHER, ROLE_STUDENT] },
+  { to: '/leave', label: 'Leave', icon: '📋', roles: [ROLE_ADMIN, ROLE_TEACHER, ROLE_STUDENT] },
+  { to: '/profile', label: 'Profile', icon: '👤', roles: [ROLE_ADMIN, ROLE_TEACHER, ROLE_STUDENT] },
 ];
 
-const DEFAULT_ROLE = 'student';
-const VALID_ROLES = ['admin', 'teacher', DEFAULT_ROLE];
-
 const ROLE_DEFAULT_ROUTE = {
-  admin: '/dashboard',
-  teacher: '/dashboard',
+  [ROLE_ADMIN]: '/dashboard',
+  [ROLE_TEACHER]: '/dashboard',
   [DEFAULT_ROLE]: '/reports',
 };
 

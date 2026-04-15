@@ -9,9 +9,11 @@ import ReportsPage from './pages/ReportsPage';
 import LeavePage from './pages/LeavePage';
 import ProfilePage from './pages/ProfilePage';
 import { getDefaultRoute, normalizeRole } from './config/rbac';
+import Loader from './components/Loader';
 
 function RoleRedirect() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) return <Loader fullScreen />;
   if (!user) return <Navigate to="/login" replace />;
   const role = normalizeRole(user?.role);
   return <Navigate to={getDefaultRoute(role)} replace />;

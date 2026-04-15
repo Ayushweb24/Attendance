@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}

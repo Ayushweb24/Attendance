@@ -8,12 +8,12 @@ import AttendancePage from './pages/AttendancePage';
 import ReportsPage from './pages/ReportsPage';
 import LeavePage from './pages/LeavePage';
 import ProfilePage from './pages/ProfilePage';
-import { getDefaultRoute, normalizeRole } from './config/rbac';
+import { getDefaultRoute, getValidRole } from './config/rbac';
 
 function RoleRedirect() {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
-  const role = normalizeRole(user?.role);
+  const role = getValidRole(user?.role);
   return <Navigate to={getDefaultRoute(role)} replace />;
 }
 

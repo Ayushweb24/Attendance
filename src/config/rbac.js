@@ -7,15 +7,17 @@ export const NAV_ITEMS = [
   { to: '/profile', label: 'Profile', icon: '👤', roles: ['admin', 'teacher', 'student'] },
 ];
 
+const DEFAULT_ROLE = 'student';
+
 const ROLE_DEFAULT_ROUTE = {
   admin: '/dashboard',
   teacher: '/dashboard',
-  student: '/reports',
+  [DEFAULT_ROLE]: '/reports',
 };
 
-export const normalizeRole = (role) => (ROLE_DEFAULT_ROUTE[role] ? role : 'student');
+export const getValidRole = (role) => (ROLE_DEFAULT_ROUTE[role] ? role : DEFAULT_ROLE);
 
 export const getAllowedPaths = (role) =>
-  NAV_ITEMS.filter((item) => item.roles.includes(normalizeRole(role))).map((item) => item.to);
+  NAV_ITEMS.filter((item) => item.roles.includes(getValidRole(role))).map((item) => item.to);
 
-export const getDefaultRoute = (role) => ROLE_DEFAULT_ROUTE[normalizeRole(role)];
+export const getDefaultRoute = (role) => ROLE_DEFAULT_ROUTE[getValidRole(role)];

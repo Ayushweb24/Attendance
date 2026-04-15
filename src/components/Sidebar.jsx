@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { NAV_ITEMS, normalizeRole } from '../config/rbac';
+import { NAV_ITEMS, getValidRole } from '../config/rbac';
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
 
-  const role = normalizeRole(user?.role);
+  const role = getValidRole(user?.role);
   const navItems = NAV_ITEMS.filter((item) => item.roles.includes(role));
 
   const handleLogout = () => {

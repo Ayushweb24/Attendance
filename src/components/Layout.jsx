@@ -1,9 +1,9 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, matchPath } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import Loader from './Loader';
-import { getAllowedPaths, getDefaultRoute, getValidRole } from '../config/rbac';
+import { getAllowedPaths, getDefaultRoute, normalizeRole } from '../config/rbac';
 
 const PAGE_TITLES = {
   '/dashboard': 'Dashboard',
@@ -21,10 +21,12 @@ export default function Layout() {
   if (loading) return <Loader fullScreen />;
   if (!user) return <Navigate to="/login" replace />;
 
-  const role = getValidRole(user?.role);
+  const role = normalizeRole(user?.role);
   const allowedPaths = getAllowedPaths(role);
   const isAllowed = allowedPaths.some(
-    (path) => location.pathname === path || location.pathname.startsWith(`${path}/`)
+    (path) =>
+      matchPath({ path, end: true }, location.pathname) ||
+      matchPath({ path: `${path}/*`, end: true }, location.pathname)
   );
   if (!isAllowed) {
     return <Navigate to={getDefaultRoute(role)} replace />;

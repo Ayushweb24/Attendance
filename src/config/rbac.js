@@ -16,7 +16,7 @@ export const NAV_ITEMS = [
 const ROLE_DEFAULT_ROUTE = {
   [ROLE_ADMIN]: '/dashboard',
   [ROLE_TEACHER]: '/dashboard',
-  [DEFAULT_ROLE]: '/reports',
+  [ROLE_STUDENT]: '/reports',
 };
 
 export const normalizeRole = (role) => (VALID_ROLES.includes(role) ? role : DEFAULT_ROLE);

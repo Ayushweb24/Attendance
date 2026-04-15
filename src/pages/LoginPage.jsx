@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 import Alert from '../components/Alert';
+import { getDefaultRoute, normalizeRole } from '../config/rbac';
 
 const ROLES = ['admin', 'teacher', 'student'];
 
@@ -33,8 +34,9 @@ export default function LoginPage() {
     const errs = validate();
     if (Object.keys(errs).length) { setFieldErrors(errs); return; }
     try {
-      await login(form);
-      navigate('/dashboard');
+      const userData = await login(form);
+      const role = normalizeRole(userData?.role ?? form.role);
+      navigate(getDefaultRoute(role));
     } catch {
       // error shown via context
     }
